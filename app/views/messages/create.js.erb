@@ -1,0 +1,2 @@
+$('div').append('<p data-id="<%= @message.id %>"><%= "#{@message.username}: #{@message.message}" %> <%= link_to "Delete", message_path(@message.id), method: :delete, remote: true %></p>')
+$('textarea').val('')

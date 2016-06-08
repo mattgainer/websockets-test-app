@@ -1,0 +1,23 @@
+<script>
+  var dispatcher = new WebSocketRails('localhost:3001/websocket');
+  dispatcher.on_open = function(data) {
+    console.log('Connection has been established: ', data);
+    // You can trigger new server events inside this callback if you wish.
+  }
+  dispatcher.bind('connection_closed', function(data) {
+    console.log('connection is closed');
+  });
+</script>
+
+<h3>All Messages</h3>
+<div>  
+  <% @messages.each do |m| %>
+    <p data-id="<%= m.id %>"><%= "#{m.username}: #{m.message}" %> <%= link_to "Delete", message_path(m.id), method: :delete, remote: true %></p>
+  <% end %>
+</div>
+<h3>Create Message</h3>
+<%= form_for(@message, remote: true) do |f| %>
+<%= f.text_field :username %><br>
+<%= f.text_area :message %><br>
+<%= f.submit %>
+<% end %>
